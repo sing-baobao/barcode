@@ -1,17 +1,15 @@
 ---
-
+// Import the React component
+import BarcodeScanner from '../components/BarcodeScanner.jsx';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Smart Space Barcode Scanner">
+  <main style={{ padding: '2rem', fontFamily: 'sans-serif', textAlign: 'center' }}>
+    <h1>Live Barcode Scanner</h1>
+    <p>Point your device camera at a barcode to capture readiing.</p>
+    
+    <!-- client:only ensures it runs exclusively in the browser -->
+    <BarcodeScanner client:only="react" />
+  </main>
+</Layout>
