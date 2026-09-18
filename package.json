@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "start": "electron ."
+    "start": "electron .",
+    "build:win": "electron-builder --win"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",
@@ -30,6 +31,18 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.2",
-    "electron": "^44.4.1"
-  }
+    "electron": "^44.4.1",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.barcode.app",
+    "productName": "Barcode Scanner",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "dist/**/*"
+    ]
+  }  
 }
