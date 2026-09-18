@@ -20,7 +20,7 @@ function createWindow() {
     }
   });
 
-  // Load your compiled Astro output (adjust path based on your Astro output config)
+  // Load your compiled Astro output cleanly using relative base paths
   mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
 }
 

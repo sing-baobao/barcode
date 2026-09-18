@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  base: './', // Ensures assets load correctly inside mobile WebViews (required by Electron)
+  base: './', // required by Electron
   markdown: {
     processor: unified(),
   },
