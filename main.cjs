@@ -1,4 +1,4 @@
-const { app, BrowserWindow, session } = require('electron');
+const { app, BrowserWindow, session, protocol, net } = require('electron');
 const path = require('path');
 
 function createWindow() {
@@ -19,6 +19,13 @@ function createWindow() {
       callback(false);
     }
   });
+
+  // --- ADD THESE 4 LINES ---
+  protocol.handle('file', (req) => {
+    const filePath = req.url.split('dist/')[1] || req.url.split('_astro/')[1];
+    return net.loadFromFile(path.join(__dirname, 'dist', filePath.includes('_astro') ? filePath : '_astro/' + filePath));
+  });
+  // -------------------------
 
   // Load your compiled Astro output cleanly using relative base paths
   mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
