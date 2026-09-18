@@ -2,6 +2,7 @@
   "name": "barcode",
   "type": "module",
   "version": "0.0.1",
+  "main": "main.cjs",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -9,10 +10,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "start": "electron ."
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.1",
     "@astrojs/react": "^6.0.6",
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@zxing/library": "^0.23.0",
@@ -22,5 +27,9 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
+    "electron": "^44.4.1"
   }
 }
