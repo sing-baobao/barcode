@@ -1,5 +1,11 @@
 const { app, BrowserWindow, session, protocol, net } = require('electron');
 const path = require('path');
+const { pathToFileURL } = require('url');
+
+// 1. Register 'app' as a secure privileged scheme so camera hardware works
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'app', privileges: { standard: true, secure: true, supportFetchAPI: true } }
+]);
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -20,15 +26,17 @@ function createWindow() {
     }
   });
 
-  // --- ADD THESE 4 LINES ---
-  protocol.handle('file', (req) => {
-    const filePath = req.url.split('dist/')[1] || req.url.split('_astro/')[1];
-    return net.loadFromFile(path.join(__dirname, 'dist', filePath.includes('_astro') ? filePath : '_astro/' + filePath));
+  // 2. Intercept app:// requests and map them cleanly to your local dist folder
+  protocol.handle('app', (request) => {
+    let filePath = new URL(request.url).pathname;
+    if (filePath === '/' || filePath === '') filePath = '/index.html';
+    
+    const absolutePath = path.join(__dirname, 'dist', filePath);
+    return net.fetch(pathToFileURL(absolutePath).toString());
   });
-  // -------------------------
 
-  // Load your compiled Astro output cleanly using relative base paths
-  mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
+  // 3. Load via the custom protocol
+  mainWindow.loadURL('app://-/index.html');
 }
 
 app.whenReady().then(() => {
